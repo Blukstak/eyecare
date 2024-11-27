@@ -5,12 +5,24 @@
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <!-- Splash screen background color -->
+        <item name="windowSplashScreenBackground">@color/purple_200</item>
+
+        <!-- Splash screen icon (use your app icon or another image) -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/main</item>
+
+        <!-- Optional: Animation duration for splash screen -->
+        <item name="windowSplashScreenAnimationDuration">300</item>
+
         <!-- Customize your theme here. -->
     </style>
 </resources>

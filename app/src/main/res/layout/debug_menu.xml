@@ -1,0 +1,74 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:elevation="8dp"
+    android:id="@+id/debugMenu">
+
+    <EditText
+        android:id="@+id/debugCommandInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter debug command" />
+
+    <Button
+        android:id="@+id/debugExecuteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Execute Command"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/logHelloButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log Hello" />
+
+        <Button
+            android:id="@+id/showTimeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Time"
+            android:layout_marginStart="8dp" />
+
+        <Button
+            android:id="@+id/clearLogsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear Logs"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/listVideosButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List Videos"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/openLastVideoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Last Video"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login with zoserx@gmail"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
+</LinearLayout>

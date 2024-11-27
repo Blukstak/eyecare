@@ -1,0 +1,7 @@
+{
+    "java.home": "C:\\Program Files\\Android\\Android Studio\\jbr",
+    "kotlin.languageServer.jvm.args": [
+        "-Xmx2G"
+    ]
+
+}

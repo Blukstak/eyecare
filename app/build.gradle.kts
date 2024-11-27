@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.camera.video)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -58,4 +60,15 @@ dependencies {
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.core.splashscreen)
+
+    // Retrofit dependencies
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson) // For JSON serialization
+
+    implementation (libs.okhttp) // Latest OkHttp library
+    implementation (libs.okhttp3.logging.interceptor) // Logging interceptor
+
+
+
 }

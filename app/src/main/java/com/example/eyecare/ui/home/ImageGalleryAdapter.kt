@@ -11,10 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.eyecare.R
 
 // ImageGalleryAdapter class
-class ImageGalleryAdapter(private val items: List<DrawerItem>) : RecyclerView.Adapter<ImageGalleryAdapter.ViewHolder>() {
+class ImageGalleryAdapter(private val items: List<DrawerItem>,
+                          private val clickListener: OnItemClickListener
+) : RecyclerView.Adapter<ImageGalleryAdapter.ViewHolder>() {
 
     // Data class for each drawer item
     data class DrawerItem(val title: String, val imageResId: Int)
+
+    // Define the custom interface
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
 
     // ViewHolder class for holding views
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,6 +38,11 @@ class ImageGalleryAdapter(private val items: List<DrawerItem>) : RecyclerView.Ad
         val item = items[position]
         holder.imageView.setImageResource(item.imageResId)
         holder.textView.text = item.title
+
+        // Set up click listener for the whole item view
+        holder.itemView.setOnClickListener {
+            clickListener.onItemClick(position) // This should now match the custom interface
+        }
     }
 
     override fun getItemCount() = items.size
@@ -62,9 +74,12 @@ fun getDefaultDrawerItems(): List<ImageGalleryAdapter.DrawerItem> {
     )
 }
 
-// Standalone function to set up the RecyclerView with ImageGalleryAdapter
-fun setupImageGalleryRecyclerView(context: Context, recyclerView: RecyclerView) {
+fun setupImageGalleryRecyclerView(
+    context: Context,
+    recyclerView: RecyclerView,
+    clickListener: ImageGalleryAdapter.OnItemClickListener
+) {
     val drawerItems = getDefaultDrawerItems()
     recyclerView.layoutManager = LinearLayoutManager(context)
-    recyclerView.adapter = ImageGalleryAdapter(drawerItems)
+    recyclerView.adapter = ImageGalleryAdapter(drawerItems, clickListener)
 }
