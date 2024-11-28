@@ -43,6 +43,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Register SettingsActivity -->
+        <activity
+            android:name="com.example.settingsapp.SettingsActivity"
+            android:exported="true"
+            android:label="EyeCareactt2"
+            android:theme="@style/Theme.EyeCare.NoActionBar" />
+        <!-- Register GalleryActivity -->
+        <activity
+            android:name=".GalleryActivity"
+            android:exported="true"
+            android:label="Gallery"
+            android:theme="@style/Theme.EyeCare.NoActionBar" />
     </application>
 
 </manifest>

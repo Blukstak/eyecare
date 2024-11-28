@@ -4,20 +4,18 @@ import CameraFragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eyecare.data.network.ApiService
 import com.example.eyecare.databinding.ActivityMainBinding
@@ -25,7 +23,7 @@ import com.example.eyecare.ui.login.LoginManager
 import com.example.eyecare.ui.login.LoginViewModel
 import com.example.eyecare.ui.login.LoginViewModelFactory
 import com.example.myapp.debug.DebugMenu
-import com.google.android.material.navigation.NavigationView
+import com.example.settingsapp.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -83,17 +81,11 @@ class MainActivity : AppCompatActivity(), ImageGalleryAdapter.OnItemClickListene
             }
         })
 
-        val navRecyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        setupImageGalleryRecyclerView(this, navRecyclerView, this)
-
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-
-        // Populate the RecyclerView with a sample list of image resources
-        val imageList = listOf(R.drawable.testrectangle, R.drawable.testrectangle, R.drawable.testrectangle)
-
-        // Button to open the drawer
+        // Button to open the GalleryActivity
         findViewById<Button>(R.id.button1).setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
+            val intent = Intent(this, GalleryActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
         }
 
         // Load the CameraFragment into the container
@@ -109,18 +101,6 @@ class MainActivity : AppCompatActivity(), ImageGalleryAdapter.OnItemClickListene
                 .setAnchorView(R.id.fab).show()
         }
 
-        val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
         // Initialize debug menu
         val parentLayout = findViewById<FrameLayout>(R.id.camera_fragment_container)
         val debugFloatingButton = findViewById<Button>(R.id.debugFloatingButton)
@@ -129,6 +109,13 @@ class MainActivity : AppCompatActivity(), ImageGalleryAdapter.OnItemClickListene
         // Toggle debug menu visibility
         debugFloatingButton.setOnClickListener {
             debugMenu.toggleVisibility()
+        }
+
+        // Modify the right button to open SettingsActivity
+        findViewById<Button>(R.id.button2).setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
         }
     }
 
