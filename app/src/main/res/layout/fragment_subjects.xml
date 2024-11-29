@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:id="@+id/settingsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_large">
+
+        <Button
+            android:id="@+id/buttonEnableShutterSound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable Shutter Sound"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_medium"
+            android:layout_marginBottom="@dimen/margin_small" />
+
+        <Button
+            android:id="@+id/buttonEnableGuide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable Guide"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_medium"
+            android:layout_marginBottom="@dimen/margin_small" />
+
+        <Button
+            android:id="@+id/buttonEnableAutoFill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable Auto Fill"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_medium"
+            android:layout_marginBottom="@dimen/margin_small" />
+    </LinearLayout>
+</ScrollView>

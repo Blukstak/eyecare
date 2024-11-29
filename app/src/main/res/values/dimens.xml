@@ -21,4 +21,5 @@
     <!-- Item Heights -->
     <dimen name="list_item_height">56dp</dimen>
     
+    <dimen name="margin_small">2dp</dimen>
 </resources>
