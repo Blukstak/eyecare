@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.eyecare.R
 import com.example.eyecare.TermsOfServiceFragment
+import com.example.settingsapp.SettingsActivity
 
 class AboutEyecareFragment : Fragment() {
     override fun onCreateView(
@@ -28,5 +29,11 @@ class AboutEyecareFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? SettingsActivity)?.updateHeader(DefaultHeaderFragment())
+        (activity as? SettingsActivity)?.updateHeaderText("About Eyecare")
     }
 }

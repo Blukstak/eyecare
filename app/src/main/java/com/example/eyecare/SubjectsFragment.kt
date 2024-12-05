@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.example.eyecare.data.factory.SettingItemFactory
 import BaseSettingItem
 import SettingItem
+import com.example.settingsapp.SettingsActivity
 
 class SubjectsFragment : Fragment() {
     override fun onCreateView(
@@ -43,6 +44,12 @@ class SubjectsFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? SettingsActivity)?.updateHeader(SubjectsHeaderFragment())
+        (activity as? SettingsActivity)?.updateHeaderText("Subjects")
     }
 
     private fun bindItemView(itemView: View, item: BaseSettingItem) {

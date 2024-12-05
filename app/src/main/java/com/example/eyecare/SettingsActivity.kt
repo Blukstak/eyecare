@@ -18,11 +18,22 @@ import com.example.eyecare.AboutEyecareFragment
 import com.example.eyecare.TermsOfServiceFragment
 import android.content.Intent
 import com.example.eyecare.AccountInfoFragment
+import androidx.fragment.app.Fragment
+import com.example.eyecare.DefaultHeaderFragment
+import android.widget.FrameLayout
+import android.view.Gravity
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        // Load the default header
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.headerContainer, DefaultHeaderFragment())
+                .commit()
+        }
 
         val userName = "Pablo Furia" // This should be dynamically set based on the current user
         val userInfoBlock = findViewById<LinearLayout>(R.id.userInfoBlock)
@@ -30,11 +41,7 @@ class SettingsActivity : AppCompatActivity() {
         userNameTextView.text = userName
 
         userInfoBlock.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_right)
-                .replace(android.R.id.content, AccountInfoFragment())
-                .addToBackStack(null)
-                .commit()
+            replaceFragment(AccountInfoFragment())
         }
 
         val settingsList = findViewById<LinearLayout>(R.id.settingsList)
@@ -65,6 +72,27 @@ class SettingsActivity : AppCompatActivity() {
                 Log.e("SettingsActivity", "Failed to inflate view for item: ${item.text}")
             }
         }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        Log.d("SettingsActivity", "Replacing fragment with: ${fragment::class.java.simpleName}")
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_right)
+            .replace(R.id.contentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    fun updateHeader(newHeaderFragment: Fragment) {
+        Log.d("SettingsActivity", "Updating header with: ${newHeaderFragment::class.java.simpleName}")
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.headerContainer, newHeaderFragment)
+            .commit()
+    }
+
+    fun updateHeaderText(title: String) {
+        val headerTitle = findViewById<TextView>(R.id.headerTitle)
+        headerTitle?.text = title
     }
 
     private fun bindItemView(itemView: View, item: BaseSettingItem) {
@@ -102,24 +130,17 @@ class SettingsActivity : AppCompatActivity() {
                 val buttonLayout = itemView.findViewById<LinearLayout>(R.id.itemButton)
                 if (buttonLayout != null) {
                     buttonLayout.setOnClickListener {
+                        Log.d("SettingsActivity", "Button '${item.text}' clicked")
                         when (item.text) {
                             "Subjects" -> {
-                                supportFragmentManager.beginTransaction()
-                                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_right)
-                                    .replace(android.R.id.content, SubjectsFragment())
-                                    .addToBackStack(null)
-                                    .commit()
+                                replaceFragment(SubjectsFragment())
+                                updateHeaderText("Subjects")
                             }
                             "About Eyecare" -> {
-                                supportFragmentManager.beginTransaction()
-                                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_right)
-                                    .replace(android.R.id.content, AboutEyecareFragment())
-                                    .addToBackStack(null)
-                                    .commit()
+                                replaceFragment(AboutEyecareFragment())
+                                updateHeaderText("About Eyecare")
                             }
-                            else -> {
-                                Log.d("SettingsActivity", "Button '${item.text}' clicked")
-                            }
+                            else -> Log.d("SettingsActivity", "Unhandled button '${item.text}' clicked")
                         }
                     }
                 } else {
@@ -146,10 +167,12 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
+        if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
         } else {
             super.onBackPressed()
+            updateHeader(DefaultHeaderFragment())
+            updateHeaderText("Settings")
         }
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }

@@ -1,69 +1,97 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/background_dark">
 
-    <LinearLayout
+    <!-- Content container below the header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_large">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".SettingsActivity"
+        android:background="@android:color/black">
 
-        <LinearLayout
-            android:id="@+id/userInfoBlock"
+        <!-- Scrollable content inside the content container -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="@android:color/white"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/userAvatar"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_launcher_foreground"
-                android:contentDescription="User Avatar" />
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/padding_large">
 
-                <TextView
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
+                <!-- This is NOT the header, it is part of the scrollable content -->
+                <LinearLayout
+                    android:id="@+id/userInfoBlock"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pablo Furia"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/userSubtitle"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/userAvatar"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_launcher_foreground"
+                        android:contentDescription="User Avatar" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pablo Furia"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/userSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Account Settings and Information"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/darker_gray" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/userChevron"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_more"
+                        android:contentDescription="Chevron" />
+                </LinearLayout>
+
+                <!-- Other content -->
+                <LinearLayout
+                    android:id="@+id/settingsList"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Account Settings and Information"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:orientation="vertical"
+                    android:paddingTop="16dp" />
             </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/userChevron"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_more"
-                android:contentDescription="Chevron" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/settingsList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="16dp" />
-    </LinearLayout>
-</ScrollView>
+    <!-- Header container at the top -->
+    <FrameLayout
+        android:id="@+id/headerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:elevation="8dp"
+        android:layout_gravity="top" />
+</FrameLayout>
