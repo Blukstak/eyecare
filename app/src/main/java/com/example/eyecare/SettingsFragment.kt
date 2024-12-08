@@ -20,6 +20,16 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
+
+        val userName = "Pablo Furia" // This should be dynamically set based on the current user
+        val userInfoBlock = view.findViewById<LinearLayout>(R.id.userInfoBlock)
+        val userNameTextView = view.findViewById<TextView>(R.id.userName)
+        userNameTextView.text = userName
+
+        userInfoBlock.setOnClickListener {
+            (activity as? MenuActivity)?.switchFragment(AccountInfoFragment())
+        }
+
         val settingsList = view.findViewById<LinearLayout>(R.id.settingsList)
 
         val items = listOf(
