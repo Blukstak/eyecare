@@ -10,4 +10,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="back_button_description">Back button</string>
+    <string name="about_eyecare">About Eyecare</string>
+    <string name="header_icon_description">Header Icon</string>
+    <string name="subjects">Subjects</string>
 </resources>

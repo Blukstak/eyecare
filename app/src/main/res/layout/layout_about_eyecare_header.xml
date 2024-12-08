@@ -1,4 +1,3 @@
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -8,14 +7,24 @@
     android:background="@android:color/holo_blue_light"
     android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/headerTitle"
+    <ImageView
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Eyecare"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="@string/back_button_description" />
+
+    <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:text="@string/about_eyecare"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:gravity="center" />
 
     <ImageView
         android:id="@+id/headerIcon"
@@ -23,5 +32,5 @@
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
         android:src="@drawable/ic_launcher_foreground"
-        android:contentDescription="Header Icon" />
+        android:contentDescription="@string/header_icon_description" />
 </LinearLayout>

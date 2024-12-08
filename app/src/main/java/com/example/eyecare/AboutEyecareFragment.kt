@@ -5,12 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import com.example.eyecare.R
-import com.example.eyecare.TermsOfServiceFragment
-import com.example.settingsapp.SettingsActivity
 
 class AboutEyecareFragment : Fragment() {
     override fun onCreateView(
@@ -21,11 +16,7 @@ class AboutEyecareFragment : Fragment() {
 
         val termsOfService = view.findViewById<TextView>(R.id.termsOfService)
         termsOfService.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_right)
-                .replace(android.R.id.content, TermsOfServiceFragment())
-                .addToBackStack(null)
-                .commit()
+            (activity as? MenuActivity)?.switchFragment(TermsOfServiceFragment())
         }
 
         return view
@@ -33,7 +24,7 @@ class AboutEyecareFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as? SettingsActivity)?.updateHeader(DefaultHeaderFragment())
-        (activity as? SettingsActivity)?.updateHeaderText("About Eyecare")
+        (activity as? MenuActivity)?.updateHeader(AboutEyecareHeaderFragment())
+        (activity as? MenuActivity)?.updateHeaderText("About Eyecare")
     }
 }

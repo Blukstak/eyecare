@@ -23,7 +23,6 @@ import com.example.eyecare.ui.login.LoginManager
 import com.example.eyecare.ui.login.LoginViewModel
 import com.example.eyecare.ui.login.LoginViewModelFactory
 import com.example.myapp.debug.DebugMenu
-import com.example.settingsapp.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -111,9 +110,9 @@ class MainActivity : AppCompatActivity(), ImageGalleryAdapter.OnItemClickListene
             debugMenu.toggleVisibility()
         }
 
-        // Modify the right button to open SettingsActivity
+        // Modify the right button to open MenuActivity
         findViewById<Button>(R.id.button2).setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
+            val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
         }

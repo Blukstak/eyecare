@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import android.widget.ImageView
 
 class DefaultHeaderFragment : Fragment() {
     override fun onCreateView(
@@ -14,7 +15,7 @@ class DefaultHeaderFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.layout_default_header, container, false)
 
-        val backButton = view.findViewById<Button>(R.id.backButton)
+        val backButton: ImageView = view.findViewById(R.id.backButton)
         backButton.setOnClickListener {
             activity?.onBackPressed()
         }
