@@ -1,4 +1,3 @@
-
 package com.example.eyecare
 
 import android.os.Bundle
@@ -43,8 +42,7 @@ class AccountInfoFragment : Fragment() {
         // Set logout button action
         val logoutButton = view.findViewById<Button>(R.id.logoutButton)
         logoutButton.setOnClickListener {
-            // Handle logout action
-            activity?.finish()
+            (activity as? MenuActivity)?.switchFragment(StepsFragment(), addToBackStack = false)
         }
 
         return view
