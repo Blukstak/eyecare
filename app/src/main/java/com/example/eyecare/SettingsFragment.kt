@@ -21,7 +21,8 @@ class SettingsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
-        val userName = "Pablo Furia" // This should be dynamically set based on the current user
+        val appSettings = (activity?.application as MyApplication).settings
+        val userName = (activity?.application as MyApplication).loginManager.getUserName()
         val userInfoBlock = view.findViewById<LinearLayout>(R.id.userInfoBlock)
         val userNameTextView = view.findViewById<TextView>(R.id.userName)
         userNameTextView.text = userName
@@ -34,12 +35,12 @@ class SettingsFragment : Fragment() {
 
         val items = listOf(
             SettingItemFactory.createButtonItem(R.drawable.main, "Subjects"),
-            SettingItemFactory.createToggleItem(R.drawable.main, "Enable Shutter Sound"),
-            SettingItemFactory.createToggleItem(R.drawable.main, "Enable Guide", isToggleOn = true),
-            SettingItemFactory.createToggleItem(R.drawable.main, "Enable Auto Fill"),
+            SettingItemFactory.createToggleItem(R.drawable.main, "Enable Shutter Sound", appSettings.enableShutterSound),
+            SettingItemFactory.createToggleItem(R.drawable.main, "Enable Guide", appSettings.enableGuide),
+            SettingItemFactory.createToggleItem(R.drawable.main, "Enable Auto Fill", appSettings.enableAutoFill),
             SettingItemFactory.createButtonItem(R.drawable.main, "About Eyecare"),
             SettingItemFactory.createButtonItem(R.drawable.main, "BLE Eyecare"),
-            SettingItemFactory.createToggleItem(R.drawable.autofill80, "Advanced Camera"),
+            SettingItemFactory.createToggleItem(R.drawable.autofill80, "Advanced Camera", appSettings.advancedCamera),
             SettingItemFactory.createValueItem(R.drawable.main, "Current Version", "1.0.0")
         )
 
@@ -71,6 +72,15 @@ class SettingsFragment : Fragment() {
             is SettingItem.ToggleItem -> {
                 val toggle = itemView.findViewById<Switch>(R.id.itemSwitch)
                 toggle?.isChecked = item.isToggleOn
+                toggle?.setOnCheckedChangeListener { _, isChecked ->
+                    val appSettings = (activity?.application as MyApplication).settings
+                    when (item.text) {
+                        "Enable Shutter Sound" -> appSettings.enableShutterSound = isChecked
+                        "Enable Guide" -> appSettings.enableGuide = isChecked
+                        "Enable Auto Fill" -> appSettings.enableAutoFill = isChecked
+                        "Advanced Camera" -> appSettings.advancedCamera = isChecked
+                    }
+                }
             }
             is SettingItem.ButtonItem -> {
                 val buttonLayout = itemView.findViewById<LinearLayout>(R.id.itemButton)

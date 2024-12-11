@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eyecare.data.network.ApiService
 import com.example.eyecare.databinding.ActivityMainBinding
+import com.example.eyecare.ui.gallery.GalleryFragment
 import com.example.eyecare.ui.login.LoginManager
 import com.example.eyecare.ui.login.LoginViewModel
 import com.example.eyecare.ui.login.LoginViewModelFactory
@@ -29,7 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(), ImageGalleryAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -80,11 +81,9 @@ class MainActivity : AppCompatActivity(), ImageGalleryAdapter.OnItemClickListene
             }
         })
 
-        // Button to open the GalleryActivity
+        // Button to open the MenuActivity with GalleryFragment
         findViewById<Button>(R.id.button1).setOnClickListener {
-            val intent = Intent(this, GalleryActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
+            openMenuWithGalleryFragment()
         }
 
         // Load the CameraFragment into the container
@@ -110,20 +109,28 @@ class MainActivity : AppCompatActivity(), ImageGalleryAdapter.OnItemClickListene
             debugMenu.toggleVisibility()
         }
 
-        // Modify the right button to open MenuActivity
+        // Modify the right button to open MenuActivity with SettingsFragment
         findViewById<Button>(R.id.button2).setOnClickListener {
-            val intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
+            openMenuWithSettingsFragment()
         }
     }
 
-    // Implement the custom onItemClick method from the adapter's interface
-    override fun onItemClick(position: Int) {
-        val intent = Intent(this, ItemInformation::class.java)
-        intent.putExtra("ITEM_TITLE", position)
-        intent.putExtra("ITEM_IMAGE_RES_ID", position)
+    private fun openMenuWithGalleryFragment() {
+        val intent = Intent(this, MenuActivity::class.java).apply {
+            putExtra("HEADER_FRAGMENT", FragmentType.GALLERY_HEADER.name)
+            putExtra("CONTENT_FRAGMENT", FragmentType.GALLERY.name)
+        }
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
+    }
+
+    private fun openMenuWithSettingsFragment() {
+        val intent = Intent(this, MenuActivity::class.java).apply {
+            putExtra("HEADER_FRAGMENT", FragmentType.DEFAULT_HEADER.name)
+            putExtra("CONTENT_FRAGMENT", FragmentType.SETTINGS.name)
+        }
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

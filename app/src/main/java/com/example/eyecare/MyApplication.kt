@@ -16,6 +16,10 @@ class MyApplication : Application() {
         createApiService()
     }
 
+    val settings: Settings by lazy {
+        Settings()
+    }
+
     override fun onCreate() {
         super.onCreate()
         // Initialize LoginManager if needed
@@ -29,4 +33,14 @@ class MyApplication : Application() {
             .build()
             .create(ApiService::class.java)
     }
+}
+
+// Define the Settings class
+class Settings {
+    var userName: String = "Pablo Furia"
+    var enableShutterSound: Boolean = false
+    var enableGuide: Boolean = true
+    var enableAutoFill: Boolean = false
+    var advancedCamera: Boolean = false
+    // Add other settings as needed
 }
