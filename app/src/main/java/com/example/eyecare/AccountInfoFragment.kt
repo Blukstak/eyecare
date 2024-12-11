@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.eyecare.data.factory.SettingItemFactory
+import com.example.eyecare.ui.login.LoginManager
 import SettingItem
 
 class AccountInfoFragment : Fragment() {
@@ -22,8 +23,8 @@ class AccountInfoFragment : Fragment() {
         // Set user details
         val userNameTextView = view.findViewById<TextView>(R.id.userName)
         val userEmailTextView = view.findViewById<TextView>(R.id.userEmail)
-        userNameTextView.text = "Pablo Furia"
-        userEmailTextView.text = "zoserx@gmail.com"
+        userNameTextView.text = LoginManager.getUserName()
+        userEmailTextView.text = LoginManager.getUserEmail()
 
         // Set account info items
         val accountInfoList = view.findViewById<LinearLayout>(R.id.accountInfoList)
@@ -42,6 +43,9 @@ class AccountInfoFragment : Fragment() {
         // Set logout button action
         val logoutButton = view.findViewById<Button>(R.id.logoutButton)
         logoutButton.setOnClickListener {
+            // Log out the user
+            LoginManager.logoutUser()
+            // Navigate to the StepsFragment
             (activity as? MenuActivity)?.switchFragment(StepsFragment(), addToBackStack = false)
         }
 

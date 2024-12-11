@@ -1,6 +1,5 @@
 package com.example.eyecare
 
-import CameraFragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -113,6 +112,19 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button2).setOnClickListener {
             openMenuWithSettingsFragment()
         }
+
+        // Check if the user is authenticated
+        if (!loginManager.IsLoggedIn()) {
+            // Launch the MenuActivity and set it to the LoginFragment
+            val intent = Intent(this, MenuActivity::class.java).apply {
+                putExtra("HEADER_FRAGMENT", FragmentType.DEFAULT_HEADER.name)
+                putExtra("CONTENT_FRAGMENT", FragmentType.LOGIN.name)
+            }
+            startActivity(intent)
+            finish()
+            return
+        }
+        
     }
 
     private fun openMenuWithGalleryFragment() {

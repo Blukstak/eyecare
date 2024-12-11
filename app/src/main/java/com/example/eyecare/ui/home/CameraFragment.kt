@@ -1,3 +1,5 @@
+package com.example.eyecare
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -35,6 +37,12 @@ class CameraFragment : Fragment() {
     private lateinit var captureButton: Button
     private var lastRecordedVideoPath: String? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Initialize cameraExecutor
+        cameraExecutor = Executors.newSingleThreadExecutor()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +55,6 @@ class CameraFragment : Fragment() {
 
         previewView = view.findViewById(R.id.previewView)
         captureButton = view.findViewById(R.id.captureButton)
-        cameraExecutor = Executors.newSingleThreadExecutor()
 
         captureButton.setOnClickListener {
             if (!isRecording) {

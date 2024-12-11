@@ -4,5 +4,6 @@ enum class FragmentType {
     GALLERY_HEADER,
     DEFAULT_HEADER,
     GALLERY,
-    SETTINGS
+    SETTINGS,
+    LOGIN // Add this line to include the LOGIN type
 }

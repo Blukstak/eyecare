@@ -47,6 +47,7 @@ class MenuActivity : AppCompatActivity() {
             FragmentType.DEFAULT_HEADER -> DefaultHeaderFragment()
             FragmentType.GALLERY -> GalleryFragment()
             FragmentType.SETTINGS -> SettingsFragment()
+            FragmentType.LOGIN -> LoginFragment() // Add this line to handle LoginFragment
         }
     }
 
@@ -54,7 +55,7 @@ class MenuActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_right)
             .replace(R.id.dynamicContentContainer, fragment)
-            .addToBackStack(null) // Add this line to ensure the fragment is added to the back stack
+            //.addToBackStack(null) // Add this line to ensure the fragment is added to the back stack
         
         if (addToBackStack) {
             transaction.addToBackStack(null)
