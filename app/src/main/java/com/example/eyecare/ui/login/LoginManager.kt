@@ -4,11 +4,13 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.eyecare.data.model.LoginResponseBody
 import com.example.eyecare.data.model.SessionData
 import com.example.eyecare.data.model.SimpleResult
 import com.example.eyecare.data.network.ApiService
+import com.example.eyecare.data.network.LoginResponseBody
 import com.example.eyecare.data.repository.AuthRepository
+import com.example.eyecare.data.repository.UserRepository
+import com.example.eyecare.data.repository.ImageRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,10 +19,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
-//Service that has STATE, not stateless
 object LoginManager {
     private val authRepository: AuthRepository by lazy {
         AuthRepository(createApiService())
+    }
+    private val userRepository: UserRepository by lazy {
+        UserRepository(createApiService())
+    }
+    private val imageRepository: ImageRepository by lazy {
+        ImageRepository(createApiService())
     }
 
     private val _lastLoginResult = MutableLiveData<SimpleResult>()
@@ -71,20 +78,45 @@ object LoginManager {
     }
 
     private fun saveSessionData(session: SessionData) {
-        // Save session data locally
         _sessionToken = session.token
         Log.d("LoginManager", "Session data saved: ${session.token}")
     }
 
-    private suspend fun getUserInfo(): SimpleResult {
-        // Implement the logic to get user info
-        // Return SimpleResult based on the success or failure of the operation
-        Log.d("LoginManager", "Retrieving user info")
-        return SimpleResult(isSuccess = true, errorMessage = "")
+    suspend fun getUserInfo(): SimpleResult {
+        return userRepository.getUserInfo(_userEmail ?: "", _userName ?: "", _sessionToken)
     }
 
+    suspend fun getUserPatients(): SimpleResult {
+        return userRepository.getUserPatients(_userEmail ?: "", _userName ?: "", _sessionToken, 1, 10)
+    }
+
+    suspend fun registerPatient(): SimpleResult {
+        // Replace with actual data
+        val identifier = "identifier"
+        val birthDate = System.currentTimeMillis()
+        val email = _userEmail ?: ""
+        val consentImage = ByteArray(0) // Replace with actual image data
+        return userRepository.registerPatient(identifier, birthDate, email, consentImage)
+    }
+
+    suspend fun getUserCloudImageInfo(): SimpleResult {
+        return imageRepository.getUserCloudImageInfo(_userEmail ?: "", _userName ?: "", _sessionToken, 1, 10)
+    }
+
+    suspend fun getImage(): SimpleResult {
+        // Replace with actual image ID
+        val imageId = "imageId"
+        return imageRepository.getImage(imageId, _userEmail ?: "", _userName ?: "", _sessionToken)
+    }
+
+    // suspend fun uploadImage(): SimpleResult {
+    //     // Replace with actual image data
+    //     val image = ByteArray(0)
+    //     val imageData = mapOf("key" to "value")
+    //     return imageRepository.uploadImage(image, imageData)
+    // }
+
     fun logoutUser() {
-        // Implement the logic to log out the user
         _sessionToken = ""
         _userName = null
         _userEmail = null
@@ -93,25 +125,21 @@ object LoginManager {
     }
 
     private fun createApiService(): ApiService {
-        // Create the HttpLoggingInterceptor for logging HTTP request/response data
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-        // Build the OkHttpClient and add the logging interceptor
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor) // Add the logging interceptor to the client
+            .addInterceptor(loggingInterceptor)
             .build()
 
-        // Define the development base URL
         val developmentBaseUrl = "https://dev.mdeyecare.com/api/v1/"
 
-        // Build and return the Retrofit instance with the OkHttpClient
         return Retrofit.Builder()
-            .baseUrl(developmentBaseUrl) // Set the base URL
-            .client(okHttpClient) // Attach the custom OkHttpClient
-            .addConverterFactory(GsonConverterFactory.create()) // Converter factory for JSON serialization/deserialization
+            .baseUrl(developmentBaseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ApiService::class.java) // Create the ApiService implementation
+            .create(ApiService::class.java)
     }
 }

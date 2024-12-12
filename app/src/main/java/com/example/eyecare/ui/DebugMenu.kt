@@ -12,6 +12,9 @@ import android.widget.FrameLayout
 import androidx.core.content.FileProvider
 import com.example.eyecare.R
 import com.example.eyecare.ui.login.LoginManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 class DebugMenu(context: Context, private val parentLayout: FrameLayout, private val loginManager: LoginManager) {
@@ -32,6 +35,11 @@ class DebugMenu(context: Context, private val parentLayout: FrameLayout, private
         val listVideosButton = debugMenuView.findViewById<Button>(R.id.listVideosButton)
         val openLastVideoButton = debugMenuView.findViewById<Button>(R.id.openLastVideoButton)
         val loginButton = debugMenuView.findViewById<Button>(R.id.loginButton)
+        val getUserInfoButton = debugMenuView.findViewById<Button>(R.id.getUserInfoButton)
+        val getUserPatientsButton = debugMenuView.findViewById<Button>(R.id.getUserPatientsButton)
+        val registerPatientButton = debugMenuView.findViewById<Button>(R.id.registerPatientButton)
+        val getUserCloudImageInfoButton = debugMenuView.findViewById<Button>(R.id.getUserCloudImageInfoButton)
+        val getImageButton = debugMenuView.findViewById<Button>(R.id.getImageButton)
 
         // Set up button listeners
         debugExecuteButton.setOnClickListener {
@@ -44,9 +52,12 @@ class DebugMenu(context: Context, private val parentLayout: FrameLayout, private
         clearLogsButton.setOnClickListener { clearLogs() }
         listVideosButton.setOnClickListener { executeDebugCommand("LIST_VIDEOS") }
         openLastVideoButton.setOnClickListener { executeDebugCommand("OPEN_LAST_VIDEO") }
-        loginButton.setOnClickListener {
-            loginUser()
-        }
+        loginButton.setOnClickListener { loginUser() }
+        getUserInfoButton.setOnClickListener { getUserInfo() }
+        getUserPatientsButton.setOnClickListener { getUserPatients() }
+        registerPatientButton.setOnClickListener { registerPatient() }
+        getUserCloudImageInfoButton.setOnClickListener { getUserCloudImageInfo() }
+        getImageButton.setOnClickListener { getImage() }
 
         // Hide menu initially
         debugMenuView.visibility = View.GONE
@@ -108,5 +119,40 @@ class DebugMenu(context: Context, private val parentLayout: FrameLayout, private
         val userAlias = "zoserx@gmail.com"
         val userPassword = "kaka22"
         loginManager.loginUser(userEmail, userAlias, userPassword)
+    }
+
+    private fun getUserInfo() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = loginManager.getUserInfo()
+            Log.d("DEBUG_MENU", "Get User Info result: ${result.isSuccess}, ${result.errorMessage}")
+        }
+    }
+
+    private fun getUserPatients() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = loginManager.getUserPatients()
+            Log.d("DEBUG_MENU", "Get User Patients result: ${result.isSuccess}, ${result.errorMessage}")
+        }
+    }
+
+    private fun registerPatient() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = loginManager.registerPatient()
+            Log.d("DEBUG_MENU", "Register Patient result: ${result.isSuccess}, ${result.errorMessage}")
+        }
+    }
+
+    private fun getUserCloudImageInfo() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = loginManager.getUserCloudImageInfo()
+            Log.d("DEBUG_MENU", "Get User Cloud Image Info result: ${result.isSuccess}, ${result.errorMessage}")
+        }
+    }
+
+    private fun getImage() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = loginManager.getImage()
+            Log.d("DEBUG_MENU", "Get Image result: ${result.isSuccess}, ${result.errorMessage}")
+        }
     }
 }
